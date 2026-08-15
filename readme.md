@@ -507,7 +507,9 @@ nohup ~/llm-lab/.venv-h3/bin/python -u generate.py \
 |---|---|---|
 | ![铁匠1](assets/frame-t1.png) | ![铁匠2](assets/frame-t7.png) | ![铁匠3](assets/frame-t14.png) |
 
-（上图来自 `chain_windows 3` 的 15 秒版本，完整视频：[assets/h3-blacksmith-15s.mp4](assets/h3-blacksmith-15s.mp4)。）
+（上图来自 `chain_windows 3` 的 15 秒版本，完整视频：）
+
+<video src="assets/h3-blacksmith-15s.mp4" controls></video>
 
 <details>
 <summary>scripts/generate.sh</summary>
@@ -714,7 +716,9 @@ ffmpeg -i morning-store-seg1.mp4 -i morning-store-seg2.mp4 -i morning-store-seg3
 |---|---|---|
 | ![便利店1](assets/store-t1.png) | ![便利店2](assets/store-t13.png) | ![便利店3](assets/store-t28.png) |
 
-（完整视频：[assets/morning-store-30s.mp4](assets/morning-store-30s.mp4)。）
+（完整视频，记得开声音——音画是同一个模型联合生成的：）
+
+<video src="assets/morning-store-30s.mp4" controls></video>
 
 五要素怎么都在场：**分镜** = 六段脚本表，每段一条 `[Shot]`；**转场** = 段间硬切/匹配剪辑在表里点名，concat 顺序即剪辑顺序；**独白口型** = 第 1 段 `<d>` 锚定 00:01.0；**配乐** = 六段共用"晨光吉他"主题、分阶段推进；**情节** = 开店→相遇→对望→开门→收留→安家，六拍一个小小的救赎故事。**更清晰** = 分辨率升到 1248×704；**更明亮** = 光源与基调直接写进分镜。音画同一个模型联合生成，每段的时间码就是它的"剧本节拍器"。
 
