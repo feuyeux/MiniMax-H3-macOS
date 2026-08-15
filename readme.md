@@ -38,11 +38,11 @@ flowchart LR
 ```
 
 > 官方 `model_index.json` 里整条流水线注册为 `MiniMaxH3Pipeline`，四个组件类名都带 **`MiniMaxH3` 前缀**——`MiniMaxH3DiTModel`（33B 本体）、`MiniMaxH3VideoVAE`、`MiniMaxH3AudioVAE`、`MiniMaxH3Qwen3VLHFEncoder`。
-> 
+>
 > 唯一"混血"的是最后一个（紫色）：MiniMax 的壳，里面装的是阿里 Qwen3-VL-32B 的权重，只取前 50 层——它不聊天、不生成文字，只当翻译官，把 prompt 变成一串 5120 维向量喂给 DiT（`text_dim: 5120` 正好是 Qwen3-VL 的隐藏层宽度，两个零件按这个接口拼在一起）。
-> 
+>
 > 整机借零件是业界常规：FLUX 借谷歌 T5、Stable Diffusion 3 借 T5+CLIP，就像 iPhone 整机是苹果的、摄像头传感器是索尼的。
-> 
+>
 > mlx-serve 不是模型零件，是本地服务软件；turbo LoRA 来自社区 larryvrh。所以你下载的 `text_encoder/` 那 62GiB 分片就是 Qwen3-VL-32B 的 BF16 权重，4-bit 包里 15.8GB 的 `text_encoder.safetensors` 是它量化后的样子，连分词器都是 Qwen 家的。
 
 ### 术语速查
@@ -177,7 +177,7 @@ flowchart LR
 
 模型官方只发布 BF16 全精度权重，托管在 ModelScope 的 `MiniMax/MiniMax-H3` 仓库 `FL2VA/` 目录。需要下载的部分：
 
-```
+```text
 FL2VA/transformer/    model-0000*.safetensors 全部 13 片 + index.json   # DiT 大脑
 FL2VA/text_encoder/   分片 00001~00011、00014 + index.json             # 文本编码器（00012/00013 跳过，见下）
 FL2VA/video_vae/      source/model.safetensors + config.json    # 视频 VAE
@@ -200,6 +200,7 @@ FL2VA/processor|tokenizer/  tokenizer.json 等 4 个小文件        # 分词器
 
 <details>
 <summary>scripts/download.py</summary>
+
 ```python
 #!/usr/bin/env python3
 # 从 ModelScope CDN 用 aria2 并行下载 MiniMax-H3 FL2VA 权重(已验证)
@@ -299,6 +300,7 @@ if __name__ == "__main__":
 
 <details>
 <summary>scripts/scan.py</summary>
+
 ```python
 #!/usr/bin/env python3
 """Fine-grained hole scan + patch for all convert-used FL2VA files.
@@ -509,6 +511,7 @@ nohup ~/llm-lab/.venv-h3/bin/python -u generate.py \
 
 <details>
 <summary>scripts/generate.sh</summary>
+
 ```bash
 #!/bin/bash
 # MiniMax-H3 本地生成脚本(MLX 4-bit, 基于 uetuluk2 重建流程)
