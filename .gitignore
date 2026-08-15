@@ -1,0 +1,21 @@
+/target/
+.DS_Store
+.idea/
+.vscode/
+.qoder/
+__pycache__/
+*.py[cod]
+
+# Config files that may contain API keys
+nimia.yaml
+
+# SQLite database files
+*.sqlite
+*.sqlite-wal
+*.sqlite-shm
+
+# Generated experiment logs
+gefsi/logs/
+.antigravitycli/
+.superpowers/
+test_crops/
